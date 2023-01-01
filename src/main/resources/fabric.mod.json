@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "betteranimations",
+  "version": "${version}",
+  "name": "Kelvin's Better Animations",
+  "description": "Uses KosmX's Player Animation mod and GeckoLib to add in better animations",
+  "authors": [
+    "Kelvin285"
+  ],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "kelvin285.betteranimations.BetterAnimations"
+    ],
+    "client": [
+      "kelvin285.betteranimations.BetterAnimations"
+    ]
+  },
+  "mixins": [
+    "kelvins_betteranimations.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.12",
+    "minecraft": ">=1.19.3"
+  }
+}

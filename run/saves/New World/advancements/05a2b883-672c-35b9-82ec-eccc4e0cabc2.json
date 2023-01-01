@@ -1,0 +1,14 @@
+{
+  "minecraft:adventure/adventuring_time": {
+    "criteria": {
+      "minecraft:savanna_plateau": "2022-12-26 22:28:41 -0500",
+      "minecraft:stony_peaks": "2022-12-26 22:27:42 -0500",
+      "minecraft:stony_shore": "2022-12-26 22:31:21 -0500",
+      "minecraft:forest": "2022-12-26 22:26:38 -0500",
+      "minecraft:savanna": "2022-12-26 22:28:45 -0500",
+      "minecraft:plains": "2022-12-26 22:26:07 -0500"
+    },
+    "done": false
+  },
+  "DataVersion": 3218
+}

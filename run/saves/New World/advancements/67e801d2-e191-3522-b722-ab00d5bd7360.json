@@ -1,0 +1,15 @@
+{
+  "minecraft:recipes/redstone/dispenser": {
+    "criteria": {
+      "has_bow": "2022-12-27 13:26:35 -0500"
+    },
+    "done": true
+  },
+  "minecraft:adventure/adventuring_time": {
+    "criteria": {
+      "minecraft:savanna": "2022-12-27 13:26:37 -0500"
+    },
+    "done": false
+  },
+  "DataVersion": 3218
+}
