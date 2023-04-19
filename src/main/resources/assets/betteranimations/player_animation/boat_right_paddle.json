@@ -99,10 +99,12 @@
 							"vector": [0, -15, 0]
 						},
 						"0.44": {
-							"vector": [0, 0, 0]
+							"vector": [0, 0, 0],
+							"easing": "easeInOutSine"
 						},
 						"0.76": {
-							"vector": [0, -15, 0]
+							"vector": [0, -15, 0],
+							"easing": "easeInOutSine"
 						}
 					},
 					"position": {
@@ -110,10 +112,12 @@
 							"vector": [0, 0, 0]
 						},
 						"0.44": {
-							"vector": [0, 0, 0]
+							"vector": [0, 0, 0],
+							"easing": "easeInOutSine"
 						},
 						"0.76": {
-							"vector": [0, 0, 0]
+							"vector": [0, 0, 0],
+							"easing": "easeInOutSine"
 						}
 					}
 				},
@@ -133,13 +137,16 @@
 							"vector": [-71.50092, -6.3402, 32.38995]
 						},
 						"0.2": {
-							"vector": [-7.53761, -3.74472, 54.82968]
+							"vector": [-7.53761, -3.74472, 54.82968],
+							"easing": "easeInOutSine"
 						},
 						"0.44": {
-							"vector": [53.27313, -3.6641, 25.56052]
+							"vector": [53.27313, -3.6641, 25.56052],
+							"easing": "easeInOutSine"
 						},
 						"0.76": {
-							"vector": [-71.50092, -6.3402, 32.38995]
+							"vector": [-71.50092, -6.3402, 32.38995],
+							"easing": "easeInOutSine"
 						}
 					},
 					"position": {
@@ -147,7 +154,8 @@
 							"vector": [0, 0, -1]
 						},
 						"0.76": {
-							"vector": [0, 0, -1]
+							"vector": [0, 0, -1],
+							"easing": "easeInOutSine"
 						}
 					}
 				},
@@ -157,10 +165,12 @@
 							"vector": [-12.90462, 8.41456, -32.45508]
 						},
 						"0.44": {
-							"vector": [-1.80462, 8.41456, -32.45508]
+							"vector": [-1.80462, 8.41456, -32.45508],
+							"easing": "easeInOutSine"
 						},
 						"0.76": {
-							"vector": [-12.90462, 8.41456, -32.45508]
+							"vector": [-12.90462, 8.41456, -32.45508],
+							"easing": "easeInOutSine"
 						}
 					},
 					"position": {
@@ -168,10 +178,12 @@
 							"vector": [0, 0, 1]
 						},
 						"0.44": {
-							"vector": [0, 0, -0.48]
+							"vector": [0, 0, -0.48],
+							"easing": "easeInOutSine"
 						},
 						"0.76": {
-							"vector": [0, 0, 1]
+							"vector": [0, 0, 1],
+							"easing": "easeInOutSine"
 						}
 					}
 				}
