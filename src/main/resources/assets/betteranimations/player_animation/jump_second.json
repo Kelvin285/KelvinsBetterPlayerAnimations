@@ -164,6 +164,7 @@
 			}
 		},
 		"jump_second": {
+			"loop": true,
 			"animation_length": 0.52,
 			"bones": {
 				"body": {
