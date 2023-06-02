@@ -73,6 +73,8 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
     public KeyframeAnimation anim_boat_right_paddle = null;
     public KeyframeAnimation anim_boat_forward = null;
 
+    public KeyframeAnimation anim_rolling = null;
+
     public int punch_index = 0;
     public int jump_index = 0;
     public KeyframeAnimation anim_jump[] = new KeyframeAnimation[2];
@@ -141,6 +143,7 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
         anim_boat_forward = PlayerAnimationRegistry.getAnimation(new Identifier("betteranimations", "boat_forward"));
         anim_boat_right_paddle = PlayerAnimationRegistry.getAnimation(new Identifier("betteranimations", "boat_right_paddle"));
         anim_boat_left_paddle = PlayerAnimationRegistry.getAnimation(new Identifier("betteranimations", "boat_left_paddle"));
+        anim_rolling = PlayerAnimationRegistry.getAnimation(new Identifier("betteranimations", "rolling"));
 
     }
     public float turnDelta = 0;
@@ -176,6 +179,7 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
         squash = MathHelper.lerp(delta * 8, squash, realSquash);
         realSquash = MathHelper.lerp(delta * 8, realSquash, 0);
 
+
         Vector3f movementVector = new Vector3f((float)(pos.x - lastPos.x), 0, (float)(pos.z - lastPos.z));
         Vector3f lookVector = new Vector3f((float)Math.cos(Math.toRadians(bodyYaw + 90)), 0, (float)Math.sin(Math.toRadians(bodyYaw + 90)));
 
@@ -192,6 +196,7 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
         } else {
             realLeanMultiplier = 1;
         }
+        /*
         if (Math.abs(prevBodyYaw - bodyYaw) > 3 && !isWalking) {
             turnDelta = Math.signum(bodyYaw - prevBodyYaw);
         } else {
@@ -200,6 +205,7 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
                 turnDelta = 0;
             }
         }
+         */
 
 
 
@@ -207,6 +213,9 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
 
         float anim_speed = 1.0f;
         int fade_time = 5;
+
+        boolean onGroundInWater = isSubmergedInWater() && this.getSteppingBlockState().getMaterial().isSolid() && !isSprinting();
+
         if (!this.handSwinging || this.handSwingTicks >= this.getHandSwingDuration() / 2 || this.handSwingTicks < 0) {
 
             if (hasVehicle() && getVehicle() instanceof BoatEntity) {
@@ -233,7 +242,7 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
             else if (isFallFlying()) {
                 anim = anim_elytra_fly;
             }
-            else if (isOnGround()) {
+            else if (isOnGround() || onGroundInWater) {
                 anim = anim_idle;
                 if (onFence) {
                     anim = anim_fence_idle;
@@ -248,7 +257,7 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
                     }
                 }
 
-                if (isInsideWaterOrBubbleColumn() || isInLava()) {
+                if ((isInsideWaterOrBubbleColumn() || isInLava()) && !onGroundInWater) {
                     if (this.isSwimming() || this.isSprinting()) {
                         anim = anim_swimming;
                     }
@@ -291,6 +300,7 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
                     }
                 }
             } else {
+
                 if (isInsideWaterOrBubbleColumn() || isInLava()) {
                     if (this.isSwimming() || this.isSprinting()) {
                         anim = anim_swimming;

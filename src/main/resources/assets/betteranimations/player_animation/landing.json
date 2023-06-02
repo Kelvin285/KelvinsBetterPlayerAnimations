@@ -6,10 +6,10 @@
 			"bones": {
 				"body": {
 					"position": {
-						"vector": [0, -10, 0]
+						"vector": [0, -4, 0]
 					},
 					"scale": {
-						"vector": [1.6, 0.2, 1.7]
+						"vector": [1, 1, 1]
 					}
 				},
 				"torso": {

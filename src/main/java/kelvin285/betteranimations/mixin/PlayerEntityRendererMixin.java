@@ -30,6 +30,11 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 
     @Inject(at=@At("HEAD"), method="render(Lnet/minecraft/client/network/AbstractClientPlayerEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", cancellable = true)
     public void render(AbstractClientPlayerEntity player, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo info) {
+
+        if (!MinecraftClient.getInstance().gameRenderer.getCamera().isThirdPerson() && player == MinecraftClient.getInstance().player) {
+            return;
+        }
+
         matrixStack.push();
 
         float lean_x = (float)player.getVelocity().z;
@@ -38,7 +43,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
         float turnLeanAmount = ((IPlayerAccessor)player).getLeanAmount();
         float leanMultiplier = ((IPlayerAccessor)player).getLeanMultiplier();
         float player_squash = ((IPlayerAccessor)player).getSquash();
-        player_squash = MathHelper.clamp(player_squash, -1, 1);
+        player_squash = MathHelper.clamp(player_squash, -1, 1) * 0.25f;
 
         float h_scale = 1;
         float v_scale = 1;
