@@ -14,20 +14,23 @@ import kelvin285.betteranimations.BetterAnimations;
 import kelvin285.betteranimations.IPlayerAccessor;
 import net.minecraft.block.*;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
+import net.minecraft.client.util.math.Vector3d;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.effect.StatusEffectUtil;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.item.*;
+import net.minecraft.network.encryption.PlayerPublicKey;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.UseAction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.World;
-import org.joml.Vector3f;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -40,9 +43,6 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
     @Unique
     private final ModifierLayer<IAnimation> modAnimationContainer = new ModifierLayer<>();
 
-    public AbstractClientPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile gameProfile) {
-        super(world, pos, yaw, gameProfile);
-    }
 
     public KeyframeAnimation anim_idle = null;
     public KeyframeAnimation anim_sneak_idle = null;
@@ -94,8 +94,12 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
 
     public float momentum = 0;
 
+    public AbstractClientPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile gameProfile, @Nullable PlayerPublicKey publicKey) {
+        super(world, pos, yaw, gameProfile, publicKey);
+    }
+
     @Inject(method = "<init>", at = @At(value = "RETURN"))
-    private void init(ClientWorld world, GameProfile profile, CallbackInfo info) {
+    private void init(ClientWorld world, GameProfile profile, PlayerPublicKey publicKey, CallbackInfo info) {
 
         var animation = PlayerAnimationRegistry.getAnimation(new Identifier(BetterAnimations.MOD_ID, "idle"));
 
@@ -180,10 +184,10 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
         realSquash = MathHelper.lerp(delta * 8, realSquash, 0);
 
 
-        Vector3f movementVector = new Vector3f((float)(pos.x - lastPos.x), 0, (float)(pos.z - lastPos.z));
-        Vector3f lookVector = new Vector3f((float)Math.cos(Math.toRadians(bodyYaw + 90)), 0, (float)Math.sin(Math.toRadians(bodyYaw + 90)));
+        Vec3f movementVector = new Vec3f((float)(pos.x - lastPos.x), 0, (float)(pos.z - lastPos.z));
+        Vec3f lookVector = new Vec3f((float)Math.cos(Math.toRadians(bodyYaw + 90)), 0, (float)Math.sin(Math.toRadians(bodyYaw + 90)));
 
-        boolean isWalking = movementVector.length() > 0;
+        boolean isWalking = MathHelper.sqrt(movementVector.getX() * movementVector.getX() + movementVector.getY() * movementVector.getY() + movementVector.getZ() * movementVector.getZ()) > 0;
         boolean isWalkingForwards = isWalking && movementVector.dot(lookVector) > 0;
 
         float walk_sign = isWalking ? isWalkingForwards ? 1 : -1 : 0;

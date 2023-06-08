@@ -10,9 +10,9 @@ import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
-import org.joml.Matrix4f;
-import org.joml.Quaternionf;
-import org.joml.Vector3f;
+import net.minecraft.util.math.Matrix4f;
+import net.minecraft.util.math.Quaternion;
+import net.minecraft.util.math.Vec3f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -65,8 +65,8 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
             v_scale = 1.0f;
         }
 
-        Quaternionf quat = new Quaternionf();
-        quat = new Matrix4f().rotate(lean_x, new Vector3f(1, 0, 0)).rotate(lean_z, new Vector3f(0, 0, 1)).getNormalizedRotation(quat);
+        Quaternion quat = Quaternion.fromEulerXyz(lean_x, 0, lean_z);
+        quat.normalize();
 
         matrixStack.multiply(quat);
         matrixStack.scale(h_scale, v_scale, h_scale);
