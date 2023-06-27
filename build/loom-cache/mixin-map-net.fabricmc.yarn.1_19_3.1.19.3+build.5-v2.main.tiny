@@ -1,2 +1,0 @@
-v1	named	intermediary
-METHOD	kelvin285/betteranimations/mixin/PlayerEntityRendererMixin	(Lnet/minecraft/client/network/AbstractClientPlayerEntity;)V	setModelPose	method_4218
