@@ -34,6 +34,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Objects;
+
 @Mixin(AbstractClientPlayerEntity.class)
 public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity implements IPlayerAccessor {
 
@@ -77,13 +79,13 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
 
     public int punch_index = 0;
     public int jump_index = 0;
-    public KeyframeAnimation anim_jump[] = new KeyframeAnimation[2];
-    public KeyframeAnimation anim_fall[] = new KeyframeAnimation[2];
+    public KeyframeAnimation[] anim_jump = new KeyframeAnimation[2];
+    public KeyframeAnimation[] anim_fall = new KeyframeAnimation[2];
 
-    public KeyframeAnimation anim_punch[] = new KeyframeAnimation[2];
-    public KeyframeAnimation anim_punch_sneaking[] = new KeyframeAnimation[2];
-    public KeyframeAnimation anim_sword_swing[] = new KeyframeAnimation[2];
-    public KeyframeAnimation anim_sword_swing_sneak[] = new KeyframeAnimation[2];
+    public KeyframeAnimation[] anim_punch = new KeyframeAnimation[2];
+    public KeyframeAnimation[] anim_punch_sneaking = new KeyframeAnimation[2];
+    public KeyframeAnimation[] anim_sword_swing = new KeyframeAnimation[2];
+    public KeyframeAnimation[] anim_sword_swing_sneak = new KeyframeAnimation[2];
 
     public float leanAmount = 0;
     public float leanMultiplier = 1;
@@ -164,10 +166,10 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
             playJumpAnimation();
         }
 
-        Block standingBlock = world.getBlockState(getBlockPos().down()).getBlock();
+        Block standingBlock = getWorld().getBlockState(getBlockPos().down()).getBlock();
         boolean onFence = (standingBlock instanceof FenceBlock || standingBlock instanceof WallBlock || standingBlock instanceof PaneBlock) && isOnGround();
 
-        boolean onEdge = !world.getBlockState(getBlockPos().down()).getMaterial().blocksMovement() && isOnGround();
+        boolean onEdge = !getWorld().getBlockState(getBlockPos().down()).blocksMovement() && isOnGround();
 
         if (turnDelta != 0) {
             leanAmount = MathHelper.lerp(delta * 4, leanAmount, bodyYaw - prevBodyYaw);
@@ -214,7 +216,7 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
         float anim_speed = 1.0f;
         int fade_time = 5;
 
-        boolean onGroundInWater = isSubmergedInWater() && this.getSteppingBlockState().getMaterial().isSolid() && !isSprinting();
+        boolean onGroundInWater = isSubmergedInWater() && this.getSteppingBlockState().isSolid() && !isSprinting();
 
         if (!this.handSwinging || this.handSwingTicks >= this.getHandSwingDuration() / 2 || this.handSwingTicks < 0) {
 
@@ -230,7 +232,7 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
                     anim = anim_boat_right_paddle;
                 }
             }
-            else if (world.getBlockState(getBlockPos()).getBlock() instanceof LadderBlock && !isOnGround() && !jumping) {
+            else if (getWorld().getBlockState(getBlockPos()).getBlock() instanceof LadderBlock && !isOnGround() && !jumping) {
                 anim = anim_climbing_idle;
                 if (getVelocity().y > 0) {
                     anim = anim_climbing;
@@ -289,7 +291,6 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
                         } else {
                             if (isSprinting() && !isUsingItem()) {
                                 anim = anim_run;
-                                anim_speed = 1.0f;
                             } else {
                                 anim = anim_walk;
                                 if (onFence) {
@@ -339,7 +340,7 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
         }
 
         lastPos = new Vec3d(pos.x, pos.y, pos.z);
-        lastOnGround = onGround;
+        lastOnGround = isOnGround();
     }
 
     KeyframeAnimation currentAnimation = null;
@@ -452,7 +453,7 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity imple
         if (StatusEffectUtil.hasHaste(this)) {
             return 6 - (1 + StatusEffectUtil.getHasteAmplifier(this));
         } else {
-            return this.hasStatusEffect(StatusEffects.MINING_FATIGUE) ? 6 + (1 + this.getStatusEffect(StatusEffects.MINING_FATIGUE).getAmplifier()) * 2 : 6;
+            return this.hasStatusEffect(StatusEffects.MINING_FATIGUE) ? 6 + (1 + Objects.requireNonNull(this.getStatusEffect(StatusEffects.MINING_FATIGUE)).getAmplifier()) * 2 : 6;
         }
     }
 

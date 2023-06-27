@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/KelvinsBetterPlayerAnimations.main.iml" filepath="$PROJECT_DIR$/.idea/modules/KelvinsBetterPlayerAnimations.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/KelvinsBetterPlayerAnimations.test.iml" filepath="$PROJECT_DIR$/.idea/modules/KelvinsBetterPlayerAnimations.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kelvin285.KelvinsBetterPlayerAnimations.main.iml" filepath="$PROJECT_DIR$/.idea/modules/kelvin285.KelvinsBetterPlayerAnimations.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kelvin285.KelvinsBetterPlayerAnimations.test.iml" filepath="$PROJECT_DIR$/.idea/modules/kelvin285.KelvinsBetterPlayerAnimations.test.iml" />
     </modules>
   </component>
 </project>
